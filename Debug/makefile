@@ -34,40 +34,37 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := Programmer_prj_f103
+BUILD_ARTIFACT_NAME := led_blink
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-Programmer_prj_f103.elf \
+led_blink.elf \
 
 MAP_FILES += \
-Programmer_prj_f103.map \
+led_blink.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-Programmer_prj_f103.list \
+led_blink.list \
 
 OBJCOPY_HEX += \
-Programmer_prj_f103.hex \
-
-OBJCOPY_BIN += \
-Programmer_prj_f103.bin \
+led_blink.hex \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: Programmer_prj_f103.elf secondary-outputs
+main-build: led_blink.elf secondary-outputs
 
 # Tool invocations
-Programmer_prj_f103.elf Programmer_prj_f103.map: $(OBJS) $(USER_OBJS) C:\Users\nhtc1\Desktop\Github\ Repository\stm32f103c8t6\programmer_uart\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Programmer_prj_f103.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\nhtc1\Desktop\Github Repository\stm32f103c8t6\programmer_uart\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Programmer_prj_f103.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+led_blink.elf led_blink.map: $(OBJS) $(USER_OBJS) D:\stm32_project\LED_Blink\STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "led_blink.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"D:\stm32_project\LED_Blink\STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="led_blink.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -76,27 +73,22 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Programmer_prj_f103.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Programmer_prj_f103.list"
+led_blink.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "led_blink.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Programmer_prj_f103.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "Programmer_prj_f103.hex"
-	@echo 'Finished building: $@'
-	@echo ' '
-
-Programmer_prj_f103.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "Programmer_prj_f103.bin"
+led_blink.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "led_blink.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) Programmer_prj_f103.bin Programmer_prj_f103.elf Programmer_prj_f103.hex Programmer_prj_f103.list Programmer_prj_f103.map default.size.stdout
+	-$(RM) default.size.stdout led_blink.elf led_blink.hex led_blink.list led_blink.map
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
